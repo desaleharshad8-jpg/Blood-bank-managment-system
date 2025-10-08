@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Donor - Blood Bank</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Blood Bank Management</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <button id="darkModeToggle" class="dark-toggle">🌙</button>
+        </nav>
+    </header>
+
+    <main class="form-section fade-in">
+        <h2>Register as a Donor</h2>
+        <form id="registerForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" required minlength="2">
+
+            <label for="age">Age (18-65):</label>
+            <input type="range" id="age" min="18" max="65" value="30" oninput="updateAgeDisplay()"> 
+            <span id="ageDisplay">30</span>
+
+            <label for="bloodGroup">Blood Group:</label>
+            <select id="bloodGroup" required>
+                <option value="">Select</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" required>
+
+            <label for="phone">Phone (10 digits):</label>
+            <input type="tel" id="phone" required pattern="\d{10}">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <button type="submit" class="btn primary">Register</button>
+        </form>
+        <p id="successMsg" style="color: green; display: none;">Registered! Check your email simulation.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Blood Bank Mini Project.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Age slider display
+        function updateAgeDisplay() {
+            document.getElementById('ageDisplay').textContent = document.getElementById('age').value;
+        }
+
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm()) {
+                const donor = getFormData();
+                saveDonor(donor);
+                document.getElementById('successMsg').style.display = 'block';
+                simulateEmail(donor);
+                this.reset();
+                updateAgeDisplay();
+            }
+        });
+    </script>
+</body>
+</html>
