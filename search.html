@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Donors - Blood Bank</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Blood Bank Management</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <button id="darkModeToggle" class="dark-toggle">🌙</button>
+        </nav>
+    </header>
+
+    <main class="search-section fade-in">
+        <h2>Search Donors</h2>
+        <div class="search-controls">
+            <input type="text" id="searchInput" placeholder="Search by name, blood group, city..." onkeyup="filterDonors()">
+            <select id="bloodFilter">
+                <option value="">All Blood Groups</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+            <select id="availFilter">
+                <option value="">All Availability</option>
+                <option value="Available">Available</option>
+                <option value="Not Available">Not Available</option>
+            </select>
+            <button onclick="exportCSV()" class="btn secondary">Export to CSV</button>
+        </div>
+        <table id="donorTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Blood Group</th>
+                    <th>City</th>
+                    <th>Phone</th>
+                    <th>Availability</th>
+                </tr>
+            </thead>
+            <tbody id="donorTbody"></tbody>
+        </table>
+        <p id="noResults" style="display: none;">No donors found. Register some!</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Blood Bank Mini Project.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        loadDonorsTable();
+        document.getElementById('bloodFilter').addEventListener('change', filterDonors);
+        document.getElementById('availFilter').addEventListener('change', filterDonors);
+    </script>
+</body>
+</html>
