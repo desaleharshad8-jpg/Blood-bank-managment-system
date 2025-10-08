@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Blood Bank Management</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <button id="darkModeToggle" class="dark-toggle">🌙</button>
+        </nav>
+    </header>
+
+    <main class="hero fade-in">
+        <section class="intro">
+            <h2>Welcome to Save Lives</h2>
+            <p>Join our mission to connect donors with those in need. Register or search for blood today!</p>
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <h3 id="totalDonors">0</h3>
+                    <p>Total Donors</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="availableDonors">0</h3>
+                    <p>Available Now</p>
+                </div>
+            </div>
+            <div class="buttons">
+                <a href="register.html" class="btn primary">Become a Donor</a>
+                <a href="search.html" class="btn secondary">Find Blood</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Blood Bank Mini Project. Built with ❤️ for saving lives.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load stats on home
+        loadStats();
+        function loadStats() {
+            const donors = getDonors();
+            document.getElementById('totalDonors').textContent = donors.length;
+            const available = donors.filter(d => d.availability === 'Available').length;
+            document.getElementById('availableDonors').textContent = available;
+        }
+    </script>
+</body>
+</html>
