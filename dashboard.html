@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Blood Bank</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Blood Bank Management</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <button id="darkModeToggle" class="dark-toggle">🌙</button>
+        </nav>
+    </header>
+
+    <main class="dashboard fade-in">
+        <h2>Dashboard Overview</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3 id="dashTotal">0</h3>
+                <p>Total Donors</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="dashAvailable">0</h3>
+                <p>Available Donors</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="dashOPlus">0</h3>
+                <p>O+ Donors</p>
+            </div>
+        </div>
+        <canvas id="bloodChart" width="400" height="200"></canvas>
+        <p class="note">Visual breakdown of blood groups among available donors.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Blood Bank Mini Project.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load dashboard data and chart
+        loadDashboard();
+        function loadDashboard() {
+            const donors = getDonors();
+            document.getElementById('dashTotal').textContent = donors.length;
+            const available = donors.filter(d => d.availability === 'Available');
+            document.getElementById('dashAvailable').textContent = available.length;
+            const oPlus = available.filter(d => d.bloodGroup === 'O+').length;
+            document.getElementById('dashOPlus').textContent = oPlus;
+
+            // Simple pie chart with Chart.js
+            const ctx = document.getElementById('bloodChart').getContext('2d');
+            const bloodGroups = {};
+            available.forEach(d => {
+                bloodGroups[d.bloodGroup] = (bloodGroups[d.bloodGroup] || 0) + 1;
+            });
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(bloodGroups),
+                    datasets: [{ data: Object.values(bloodGroups), backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'] }]
+                },
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+    </script>
+</body>
+</html>
